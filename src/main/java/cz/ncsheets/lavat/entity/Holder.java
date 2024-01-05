@@ -1,9 +1,6 @@
 package cz.ncsheets.lavat.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +20,10 @@ public class Holder {
     private String name;
 
     private String diameter;
+
+    @ManyToOne
+    @JoinColumn(name = "holdersize_id")
+    private Holdersize holderSize;
 
     private String length;
 

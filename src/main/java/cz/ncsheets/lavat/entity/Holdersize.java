@@ -6,16 +6,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "holder_size")
-public class HolderSize {
+public class Holdersize {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String name;
+
+    @OneToMany(mappedBy = "holderSize")
+    private List<Holder> holders;
 }
