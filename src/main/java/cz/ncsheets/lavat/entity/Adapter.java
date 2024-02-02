@@ -1,29 +1,49 @@
 package cz.ncsheets.lavat.entity;
+import cz.ncsheets.lavat.constants.Constants;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.Objects;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Adapter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
+    @NotEmpty(message = Constants.NOT_EMPTY)
+    @NotNull(message = Constants.NOT_NULL)
+    @NotBlank(message = Constants.NOT_BLANK)
+    @Size(min = Constants.SIZE_MIN, max = Constants.SIZE_MAX)
     private String name;
 
-    private String diameter;
+    @NotNull(message = Constants.NOT_NULL)
+    @DecimalMin(value = Constants.DECIMAL_MIN, message = Constants.DECIMAL_MIN_MESSAGE)
+    private double diameter;
 
-    private String length;
+    @NotNull(message = Constants.NOT_NULL)
+    @DecimalMin(value = Constants.DECIMAL_MIN, message = Constants.DECIMAL_MIN_MESSAGE)
+    private double length;
+
+    public Adapter (Adapter adapter){
+        this.name = adapter.getName();
+        this.diameter = adapter.getDiameter();
+        this.length = adapter.getLength();
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Adapter)) {
+            return false;
+        }
+        Adapter adapter = (Adapter) o;
+        return Objects.equals(name, adapter.name) && Objects.equals(diameter, adapter.diameter) && length == adapter.length;
+    }
 
 }
