@@ -4,6 +4,7 @@ CREATE TABLE holdersize
     name        VARCHAR(100) NOT NULL
 );
 
+
 CREATE TABLE tooltype
 (
     id          INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -35,3 +36,16 @@ CREATE TABLE holder
     length          INTEGER NOT NULL,
     FOREIGN KEY (holdersize_id) REFERENCES holdersize (id)
 );
+
+-- CREATE TABLE members
+-- (
+--     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+--     password char(68) NOT NULL,
+--     active tinyint NOT NULL
+-- );
+--
+-- CREATE TABLE roles (
+--     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+--     role varchar(50) NOT NULL,
+--     FOREIGN KEY (id) REFERENCES members (id)
+-- );
