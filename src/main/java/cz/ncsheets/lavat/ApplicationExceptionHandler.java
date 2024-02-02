@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
@@ -29,6 +30,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Object> handlerException(NotFoundException ex) {
 
@@ -38,6 +40,24 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
+    @Override
+    protected ResponseEntity<Object> handleNoResourceFoundException(NoResourceFoundException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        ErrorResponse error = new ErrorResponse();
+        error.setMessage("No resource found");
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+//    @ExceptionHandler(NoResourceFoundException.class)
+//    public ResponseEntity<Object> handlerException(NoResourceFoundException ex) {
+//
+//        ErrorResponse error = new ErrorResponse();
+//        error.setMessage("No resource found");
+//        error.setStatus(HttpStatus.NOT_FOUND.value());
+//
+//        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+//    }
 
     @ExceptionHandler(DuplicateObjectException.class)
     public ResponseEntity<Object> handlerException(DuplicateObjectException ex) {
