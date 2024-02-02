@@ -1,11 +1,13 @@
 package cz.ncsheets.lavat;
 
 import cz.ncsheets.lavat.exception.*;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -49,15 +51,6 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
-//    @ExceptionHandler(NoResourceFoundException.class)
-//    public ResponseEntity<Object> handlerException(NoResourceFoundException ex) {
-//
-//        ErrorResponse error = new ErrorResponse();
-//        error.setMessage("No resource found");
-//        error.setStatus(HttpStatus.NOT_FOUND.value());
-//
-//        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-//    }
 
     @ExceptionHandler(DuplicateObjectException.class)
     public ResponseEntity<Object> handlerException(DuplicateObjectException ex) {
@@ -68,14 +61,24 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
-    @ExceptionHandler(ObjectValidationFailedException.class)
-    public ResponseEntity<Object> handlerException(ObjectValidationFailedException ex) {
+
+    @Override
+    protected ResponseEntity<Object> handleHandlerMethodValidationException(HandlerMethodValidationException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        ErrorResponse error = new ErrorResponse();
+        error.setMessage("Primary key is not unique");
+        error.setStatus(HttpStatus.CONFLICT.value());
+
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handlerException(DataIntegrityViolationException ex) {
 
         ErrorResponse error = new ErrorResponse();
-        error.setMessage(ex.getLocalizedMessage());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage("Primary key is not unique");
+        error.setStatus(HttpStatus.CONFLICT.value());
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
     @ExceptionHandler(ObjectIDisNotNull.class)
     public ResponseEntity<Object> handlerException(ObjectIDisNotNull ex) {
