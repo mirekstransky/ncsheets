@@ -1,5 +1,6 @@
 package cz.ncsheets.lavat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import cz.ncsheets.lavat.constants.Constants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -20,13 +21,14 @@ public class Tooltype {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotEmpty(message = Constants.NOT_EMPTY)
     @NotNull(message = Constants.NOT_NULL)
     @NotBlank(message = Constants.NOT_BLANK)
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tooltype")
     private List<Tool> tools;
 }
