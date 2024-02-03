@@ -6,12 +6,11 @@ import cz.ncsheets.lavat.entity.Adapter;
 import org.springframework.validation.BindingResult;
 
 public interface AdapterServiceREST {
-    Adapter getAdapter(Long id);
-    Adapter saveAdapter(Adapter adapter, BindingResult bindingResult);
-    Adapter updateAdapter(Adapter adapter, Long id);
-    void deleteAdapter(Long id);
-    List<Adapter> getAdapters();
-    List<Adapter> addBatch(List<Adapter> adapters, BindingResult bindingResult);
+    Adapter getComponent(Long id);
+    Adapter saveComponent(Adapter adapter);
+    Adapter updateComponent(Adapter adapter, Long id);
+    void deleteComponent(Long id);
+    List<Adapter> getComponents();
     void deleteAll();
 
 }
