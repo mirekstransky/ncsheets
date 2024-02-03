@@ -62,7 +62,7 @@ public class AdapterServiceRESTImpl implements AdapterServiceREST {
 
     private void validateErrors(Adapter adapter){
         if (!Objects.isNull(adapter.getId())) {
-            throw new ObjectIDisNotNull();
+            throw new ObjectIDisNotNull("ADAPTER");
         }
     }
 
