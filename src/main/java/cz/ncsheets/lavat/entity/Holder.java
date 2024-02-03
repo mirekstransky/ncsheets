@@ -1,5 +1,6 @@
 package cz.ncsheets.lavat.entity;
 
+import cz.ncsheets.lavat.constants.Constants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -21,21 +22,21 @@ public class Holder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
-    @NotNull
-    @NotBlank(message = "Subject cannot be blank")
+    @NotEmpty(message = Constants.NOT_EMPTY)
+    @NotNull(message = Constants.NOT_NULL)
+    @NotBlank(message = Constants.NOT_BLANK)
     private String name;
 
     @NotNull
-    @DecimalMin(value = "1.0",message = "Subject must be greater than 1")
+    @DecimalMin(value = Constants.DECIMAL_MIN ,message = Constants.DECIMAL_MIN_MESSAGE)
     private double diameter;
 
     @ManyToOne
     @JoinColumn(name = "holdersize_id")
     private Holdersize holderSize;
 
-    @NotNull
-    @DecimalMin(value = "1.0",message = "Subject must be greater than 1")
+    @NotNull(message = Constants.NOT_NULL)
+    @DecimalMin(value = Constants.DECIMAL_MIN,message = Constants.DECIMAL_MIN_MESSAGE)
     private double length;
 
 }
