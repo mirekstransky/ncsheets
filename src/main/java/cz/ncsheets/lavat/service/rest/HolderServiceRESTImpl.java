@@ -84,12 +84,12 @@ public class HolderServiceRESTImpl implements HolderServiceREST {
     }
     private void validateErrors(Holder holder){
         if (!Objects.isNull(holder.getId())) {
-            throw new ObjectIDisNotNull();
+            throw new ObjectIDisNotNull("HOLDER");
         }
     }
     private Holdersize saveHoldersize(Holder holder){
         if (!Objects.isNull(holder.getHolderSize().getId())) {
-            throw new ObjectIDisNotNull();
+            throw new ObjectIDisNotNull("HOLDERSIZE");
         }
         Optional<Holdersize> holdersize = holdersizeRepository.
                 findComponentByName(holder.getHolderSize().getName());

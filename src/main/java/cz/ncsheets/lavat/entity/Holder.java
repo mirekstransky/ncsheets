@@ -32,6 +32,7 @@ public class Holder {
     private double diameter;
 
     @ManyToOne
+    @NotNull(message = Constants.NOT_NULL)
     @JoinColumn(name = "holdersize_id")
     private Holdersize holderSize;
 
