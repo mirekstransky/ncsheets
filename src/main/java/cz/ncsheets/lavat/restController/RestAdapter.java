@@ -20,36 +20,31 @@ public class RestAdapter {
     AdapterServiceREST adapterServiceREST;
 
     @GetMapping("")
-    public ResponseEntity<List<Adapter>> getAdapters() {
-        List<Adapter> adapterList = adapterServiceREST.getAdapters();
+    public ResponseEntity<List<Adapter>> getComponents() {
+        List<Adapter> adapterList = adapterServiceREST.getComponents();
         return new ResponseEntity<>(adapterList, HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Adapter> getAdapter(@PathVariable Long id) {
-        return new ResponseEntity<>(adapterServiceREST.getAdapter(id), HttpStatus.OK);
+    public ResponseEntity<Adapter> getComponent(@PathVariable Long id) {
+        return new ResponseEntity<>(adapterServiceREST.getComponent(id), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<Adapter> saveAdapter(@Valid @RequestBody Adapter adapter, BindingResult bindingResult) {
-        return new ResponseEntity<>(adapterServiceREST.saveAdapter(adapter,bindingResult), HttpStatus.CREATED);
+    public ResponseEntity<Adapter> saveComponent(@Valid @RequestBody Adapter adapter) {
+        return new ResponseEntity<>(adapterServiceREST.saveComponent(adapter), HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Adapter> editAdapter(@PathVariable Long id, @Valid @RequestBody Adapter adapter) {
-        return new ResponseEntity<>(adapterServiceREST.updateAdapter(adapter,id), HttpStatus.OK);
+    public ResponseEntity<Adapter> editComponent(@PathVariable Long id, @Valid @RequestBody Adapter adapter) {
+        return new ResponseEntity<>(adapterServiceREST.updateComponent(adapter,id), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteAdapter(@PathVariable Long id) {
-        adapterServiceREST.deleteAdapter(id);
+    public ResponseEntity<HttpStatus> deleteComponent(@PathVariable Long id) {
+        adapterServiceREST.deleteComponent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @DeleteMapping("/deleteAll")
-    public ResponseEntity<HttpStatus> deleteAllAdapters() {
+    public ResponseEntity<HttpStatus> deleteAllComponent() {
         adapterServiceREST.deleteAll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @PostMapping("/batch")
-    public ResponseEntity<List<Adapter>> addBatch(@Valid @RequestBody List<Adapter> adapters, BindingResult bindingResult) {
-        return new ResponseEntity<>(adapterServiceREST.addBatch(adapters,bindingResult), HttpStatus.CREATED);
-    }
-
 
 }
