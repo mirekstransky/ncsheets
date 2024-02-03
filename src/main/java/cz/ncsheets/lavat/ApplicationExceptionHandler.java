@@ -17,7 +17,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         ErrorResponse error = new ErrorResponse();
-        error.setMessage("Failed to read request");
+        error.setMessage(ex.getMessage());
         error.setStatus(HttpStatus.NOT_FOUND.value());
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
@@ -28,11 +28,35 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
         ErrorResponse error = new ErrorResponse();
-        error.setMessage("Validation failed for argument");
+        error.setMessage(ex.getMessage());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+    @Override
+    protected ResponseEntity<Object> handleHandlerMethodValidationException(HandlerMethodValidationException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        ErrorResponse error = new ErrorResponse();
+        error.setMessage(ex.getMessage());
+        error.setStatus(HttpStatus.CONFLICT.value());
 
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+    @Override
+    protected ResponseEntity<Object> handleNoResourceFoundException(NoResourceFoundException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        ErrorResponse error = new ErrorResponse();
+        error.setMessage(error.getMessage());
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ObjectValidationFailedException.class)
+    public ResponseEntity<Object> handlerException(ObjectValidationFailedException ex) {
+
+        ErrorResponse error = new ErrorResponse();
+        error.setMessage("Object validation failed");
+        error.setStatus(HttpStatus.CONFLICT.value());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Object> handlerException(NotFoundException ex) {
 
@@ -43,14 +67,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    @Override
-    protected ResponseEntity<Object> handleNoResourceFoundException(NoResourceFoundException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        ErrorResponse error = new ErrorResponse();
-        error.setMessage("No resource found");
-        error.setStatus(HttpStatus.NOT_FOUND.value());
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
 
     @ExceptionHandler(DuplicateObjectException.class)
     public ResponseEntity<Object> handlerException(DuplicateObjectException ex) {
@@ -62,20 +79,13 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
-    @Override
-    protected ResponseEntity<Object> handleHandlerMethodValidationException(HandlerMethodValidationException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        ErrorResponse error = new ErrorResponse();
-        error.setMessage("Primary key is not unique");
-        error.setStatus(HttpStatus.CONFLICT.value());
 
-        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
-    }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Object> handlerException(DataIntegrityViolationException ex) {
 
         ErrorResponse error = new ErrorResponse();
-        error.setMessage("Primary key is not unique");
+        error.setMessage(ex.getLocalizedMessage());
         error.setStatus(HttpStatus.CONFLICT.value());
 
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
