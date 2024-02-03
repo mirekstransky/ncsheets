@@ -43,7 +43,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     @Override
     protected ResponseEntity<Object> handleNoResourceFoundException(NoResourceFoundException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         ErrorResponse error = new ErrorResponse();
-        error.setMessage(error.getMessage());
+        error.setMessage(ex.getLocalizedMessage());
         error.setStatus(HttpStatus.NOT_FOUND.value());
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
