@@ -63,7 +63,7 @@ public class TooltypeServiceRESTImpl implements TooltypeServiceREST{
 
     private void validateErrors(Tooltype tooltype){
         if (!Objects.isNull(tooltype.getId())) {
-            throw new ObjectIDisNotNull();
+            throw new ObjectIDisNotNull("TOOLTYPE");
         }
     }
 }
