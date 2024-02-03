@@ -68,7 +68,7 @@ public class HoldersizeServiceRESTImpl implements HoldersizeServiceREST{
     }
     private void validateErrors(Holdersize holdersize){
         if (!Objects.isNull(holdersize.getId())){
-            throw new ObjectIDisNotNull();
+            throw new ObjectIDisNotNull("HOLDERSIZE");
         }
     }
 
