@@ -19,13 +19,15 @@ public class Tool {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotEmpty(message = Constants.NOT_EMPTY)
     @NotNull(message = Constants.NOT_NULL)
     @NotBlank(message = Constants.NOT_NULL)
     private String name;
 
+
+    @NotNull(message = Constants.NOT_NULL)
     @ManyToOne
     @JoinColumn(name = "tooltype_id")
     private Tooltype tooltype;
