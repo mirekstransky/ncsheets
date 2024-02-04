@@ -15,8 +15,8 @@ CREATE TABLE adapter
 (
     id          INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name        VARCHAR(100) NOT NULL UNIQUE,
-    diameter    VARCHAR(100) NOT NULL,
-    length      VARCHAR(100) NOT NULL
+    diameter    DOUBLE NOT NULL,
+    length      DOUBLE NOT NULL
 );
 
 CREATE TABLE tool
@@ -31,10 +31,35 @@ CREATE TABLE holder
 (
     id              INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name            VARCHAR(100) NOT NULL UNIQUE,
-    diameter        INTEGER NOT NULL,
+    diameter        DOUBLE NOT NULL,
     holdersize_id   INTEGER NOT NULL,
-    length          INTEGER NOT NULL,
+    length          DOUBLE NOT NULL,
     FOREIGN KEY (holdersize_id) REFERENCES holdersize (id)
+);
+
+CREATE TABLE program
+(
+    id              INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name            VARCHAR(100) NOT NULL UNIQUE,
+    technologist    VARCHAR(100) NOT NULL,
+    itemname        VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE assemble
+(
+    id              INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    program_id      INTEGER NOT NULL,
+    adapter_id      INTEGER NOT NULL,
+    holder_id       INTEGER NOT NULL,
+    tool_id         INTEGER NOT NULL,
+    tool_position   INTEGER NOT NULL,
+    tool_length     DOUBLE NOT NULL,
+    compensation_x  DOUBLE NOT NULL,
+    compensation_z  DOUBLE NOT NULL,
+    FOREIGN KEY (program_id) REFERENCES program (id),
+    FOREIGN KEY (adapter_id) REFERENCES adapter (id),
+    FOREIGN KEY (holder_id) REFERENCES holder (id),
+    FOREIGN KEY (tool_id) REFERENCES tool (id)
 );
 
 -- CREATE TABLE members

@@ -13,4 +13,3 @@ INSERT INTO tool (name, tooltype_id) VALUES ('Fréza PR16',2);
 INSERT INTO tool (name, tooltype_id) VALUES ('Fréza PR20',2);
 INSERT INTO tool (name, tooltype_id) VALUES ('Fréza PR25',2);
 
-
