@@ -48,6 +48,7 @@ CREATE TABLE program
 CREATE TABLE assemble
 (
     id              INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name            VARCHAR(100) NOT NULL UNIQUE,
     program_id      INTEGER NOT NULL,
     adapter_id      INTEGER NOT NULL,
     holder_id       INTEGER NOT NULL,
