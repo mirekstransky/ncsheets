@@ -19,7 +19,6 @@ public class Adapter {
     @NotEmpty(message = Constants.NOT_EMPTY)
     @NotNull(message = Constants.NOT_NULL)
     @NotBlank(message = Constants.NOT_BLANK)
-    @Size(min = Constants.SIZE_MIN, max = Constants.SIZE_MAX)
     private String name;
 
     @NotNull(message = Constants.NOT_NULL)
