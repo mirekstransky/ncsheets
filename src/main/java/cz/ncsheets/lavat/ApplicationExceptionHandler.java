@@ -30,7 +30,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
         ErrorResponse error = new ErrorResponse();
-        error.setMessage(ex.getMessage());
+        error.setMessage(ex.getLocalizedMessage());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
