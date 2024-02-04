@@ -2,6 +2,8 @@ package cz.ncsheets.lavat.service.rest;
 
 import cz.ncsheets.lavat.entity.Adapter;
 import cz.ncsheets.lavat.entity.Program;
+import cz.ncsheets.lavat.entity.Tool;
+import cz.ncsheets.lavat.entity.Tooltype;
 import cz.ncsheets.lavat.exception.BadArgumentType;
 import cz.ncsheets.lavat.exception.NotFoundException;
 import cz.ncsheets.lavat.exception.ObjectIDisNotNull;
@@ -30,13 +32,17 @@ public class ProgramServiceRESTImpl implements ProgramServiceREST {
     }
     @Override
     public Program saveComponent(Program program) {
-        validateErrors(program);
-//        if (findComponent(adapter)) throw new DuplicateObjectException();
-        return programRepository.save(program);
+        checkIDnull(program);
+        Optional<Program> newProgram = programRepository.findComponentByName(program.getName());
+        if (newProgram.isPresent()){
+            program.setId(newProgram.get().getId());
+            return programRepository.save(program);
+        }else{
+            return programRepository.save(program);
+        }
     }
     @Override
     public Program updateComponent(Program program, Long id) {
-        validateErrors(program);
         Program program_copy = unwrapProgram(programRepository.findById(id),id);
         program.setId(id);
         return programRepository.save(program);
@@ -62,8 +68,8 @@ public class ProgramServiceRESTImpl implements ProgramServiceREST {
         }
     }
 
-    private void validateErrors(Program program){
-        if (!Objects.isNull(program.getId())) {
+    private void checkIDnull(Program program){
+        if (!Objects.isNull(program.getId())){
             throw new ObjectIDisNotNull("PROGRAM");
         }
     }

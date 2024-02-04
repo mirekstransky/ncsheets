@@ -1,6 +1,8 @@
 package cz.ncsheets.lavat.service.rest;
 
 import cz.ncsheets.lavat.entity.Adapter;
+import cz.ncsheets.lavat.entity.Holdersize;
+import cz.ncsheets.lavat.entity.Tool;
 import cz.ncsheets.lavat.entity.Tooltype;
 import cz.ncsheets.lavat.exception.BadArgumentType;
 import cz.ncsheets.lavat.exception.NotFoundException;
@@ -29,13 +31,17 @@ public class TooltypeServiceRESTImpl implements TooltypeServiceREST{
     }
     @Override
     public Tooltype saveComponent(Tooltype tooltype) {
-        validateErrors(tooltype);
-//        if (findComponent(adapter)) throw new DuplicateObjectException();
-        return tooltypeRepository.save(tooltype);
+        checkIDnull(tooltype);
+        Optional<Tooltype> newTooltype = tooltypeRepository.findComponentByName(tooltype.getName());
+        if (newTooltype.isPresent()){
+            tooltype.setId(newTooltype.get().getId());
+            return tooltypeRepository.save(tooltype);
+        }else{
+            return tooltypeRepository.save(tooltype);
+        }
     }
     @Override
     public Tooltype updateComponent(Tooltype tooltype, Long id) {
-        validateErrors(tooltype);
         Tooltype tooltype_copy = unwrapComponent(tooltypeRepository.findById(id),id);
         tooltype.setId(id);
         return tooltypeRepository.save(tooltype);
@@ -61,8 +67,8 @@ public class TooltypeServiceRESTImpl implements TooltypeServiceREST{
         }
     }
 
-    private void validateErrors(Tooltype tooltype){
-        if (!Objects.isNull(tooltype.getId())) {
+    private void checkIDnull(Tooltype tooltype){
+        if (!Objects.isNull(tooltype.getId())){
             throw new ObjectIDisNotNull("TOOLTYPE");
         }
     }

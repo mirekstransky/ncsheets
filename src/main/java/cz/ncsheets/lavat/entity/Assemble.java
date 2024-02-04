@@ -17,6 +17,11 @@ public class Assemble {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = Constants.NOT_EMPTY)
+    @NotNull(message = Constants.NOT_NULL)
+    @NotBlank(message = Constants.NOT_BLANK)
+    private String name;
+
     @NotNull(message = Constants.NOT_NULL)
     @ManyToOne
     @JoinColumn(name = "program_id")

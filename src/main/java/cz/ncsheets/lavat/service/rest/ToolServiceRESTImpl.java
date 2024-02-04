@@ -32,18 +32,29 @@ public class ToolServiceRESTImpl implements ToolServiceREST {
     }
     @Override
     public Tool saveComponent(Tool tool) {
-        validateErrors(tool);
-        Tooltype tooltype = saveTooltype(tool);
-        tool.getTooltype().setId(tooltype.getId());
-        return toolRepository.save(tool);
+        checkIDnull(tool);
+        Optional<Tool> newTool = toolRepository.findComponentByName(tool.getName());
+        Tooltype tooltype = tooltypeServiceREST.saveComponent(tool.getTooltype());
+
+        if (newTool.isPresent()){
+            tool.setId(newTool.get().getId());
+            tool.setTooltype(tooltype);
+            return toolRepository.save(tool);
+
+        }else{
+            tool.setTooltype(tooltype);
+            return toolRepository.save(tool);
+        }
     }
     @Override
     public Tool updateComponent(Tool tool , Long id) {
-        validateErrors(tool);
+
         Tool tool_copy = unwrapComponent(toolRepository.findById(id),id);
+
+        Tooltype tooltype = tooltypeServiceREST.updateComponent(tool.getTooltype(),tool.getTooltype().getId());
+        tool.setTooltype(tooltype);
         tool.setId(id);
-        Tooltype tooltype = saveTooltype(tool);
-        tool.getTooltype().setId(tooltype.getId());
+
         return toolRepository.save(tool);
     }
     @Override
@@ -67,33 +78,10 @@ public class ToolServiceRESTImpl implements ToolServiceREST {
             throw new BadArgumentType(id);
         }
     }
-    private boolean unwrapDuplicate(Holder holder){
-        Optional<Tool> toolOptional = toolRepository.findComponentByName(holder.getName());
-        if (toolOptional.isPresent()){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    private void validateErrors(Tool tool){
-        if (!Objects.isNull(tool.getId())) {
+    private void checkIDnull(Tool tool){
+        if (!Objects.isNull(tool.getId())){
             throw new ObjectIDisNotNull("TOOL");
         }
     }
-    private Tooltype saveTooltype(Tool tool){
 
-        if (!Objects.isNull(tool.getTooltype().getId())) {
-            throw new ObjectIDisNotNull("TOOLTYPE");
-        }
-        Optional<Tooltype> tooltype = tooltypeRepository.
-                findComponentByName(tool.getTooltype().getName());
-        if (!tooltype.isPresent()){
-            Tooltype tooltype_new = new Tooltype();
-            tooltype_new.setName(tool.getTooltype().getName());
-            tooltypeServiceREST.saveComponent(tooltype_new);
-            return tooltype_new;
-        }else{
-            return tooltype.get();
-        }
-    }
 }

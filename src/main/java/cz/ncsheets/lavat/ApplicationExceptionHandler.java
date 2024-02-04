@@ -3,6 +3,7 @@ package cz.ncsheets.lavat;
 import cz.ncsheets.lavat.exception.*;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -34,6 +35,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
     @Override
     protected ResponseEntity<Object> handleHandlerMethodValidationException(HandlerMethodValidationException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         ErrorResponse error = new ErrorResponse();
@@ -59,6 +61,16 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 
         return new ResponseEntity<>(error, HttpStatus.METHOD_NOT_ALLOWED);
     }
+//    IllegalArgumentException
+
+    @ExceptionHandler(InvalidDataAccessApiUsageException.class)
+    public ResponseEntity<Object> handlerException(InvalidDataAccessApiUsageException ex) {
+
+        ErrorResponse error = new ErrorResponse();
+        error.setMessage(ex.getMessage());
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(ObjectValidationFailedException.class)
     public ResponseEntity<Object> handlerException(ObjectValidationFailedException ex) {
@@ -82,7 +94,6 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         ErrorResponse error = new ErrorResponse();
         error.setMessage(ex.getLocalizedMessage());
         error.setStatus(HttpStatus.NOT_FOUND.value());
-
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 

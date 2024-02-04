@@ -1,15 +1,14 @@
 package cz.ncsheets.lavat.service.rest;
 
-import cz.ncsheets.lavat.entity.Adapter;
+import cz.ncsheets.lavat.entity.Holder;
 import cz.ncsheets.lavat.entity.Holdersize;
+import cz.ncsheets.lavat.entity.Tooltype;
 import cz.ncsheets.lavat.exception.BadArgumentType;
 import cz.ncsheets.lavat.exception.NotFoundException;
 import cz.ncsheets.lavat.exception.ObjectIDisNotNull;
-import cz.ncsheets.lavat.exception.ObjectValidationFailedException;
 import cz.ncsheets.lavat.repository.HoldersizeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Objects;
@@ -31,12 +30,17 @@ public class HoldersizeServiceRESTImpl implements HoldersizeServiceREST{
     }
     @Override
     public Holdersize saveComponent(Holdersize holdersize) {
-        validateErrors(holdersize);
-        return holdersizeRepository.save(holdersize);
+        checkIDnull(holdersize);
+        Optional<Holdersize> newHoldersize = holdersizeRepository.findComponentByName(holdersize.getName());
+        if (newHoldersize.isPresent()){
+            holdersize.setId(newHoldersize.get().getId());
+            return holdersizeRepository.save(holdersize);
+        }else{
+            return holdersizeRepository.save(holdersize);
+        }
     }
     @Override
     public Holdersize updateComponent(Holdersize holdersize, Long id) {
-        validateErrors(holdersize);
         Holdersize holdersize_copy = unwrapComponent(holdersizeRepository.findById(id),id);
         holdersize.setId(id);
         return holdersizeRepository.save(holdersize);
@@ -66,10 +70,9 @@ public class HoldersizeServiceRESTImpl implements HoldersizeServiceREST{
             throw new BadArgumentType(id);
         }
     }
-    private void validateErrors(Holdersize holdersize){
+    private void checkIDnull(Holdersize holdersize){
         if (!Objects.isNull(holdersize.getId())){
             throw new ObjectIDisNotNull("HOLDERSIZE");
         }
     }
-
 }

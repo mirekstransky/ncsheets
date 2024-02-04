@@ -1,6 +1,6 @@
 package cz.ncsheets.lavat.service.rest;
 
-import cz.ncsheets.lavat.entity.Assemble;
+import cz.ncsheets.lavat.entity.*;
 import cz.ncsheets.lavat.exception.BadArgumentType;
 import cz.ncsheets.lavat.exception.NotFoundException;
 import cz.ncsheets.lavat.exception.ObjectIDisNotNull;
@@ -19,6 +19,12 @@ public class AssembleServiceRESTImpl implements AssembleServiceREST {
 
     AssembleRepository assembleRepository;
 
+    AdapterServiceREST adapterServiceREST;
+    HolderServiceREST holderServiceREST;
+    ToolServiceREST toolServiceREST;
+    ProgramServiceREST programServiceREST;
+
+
     @Override
     public List<Assemble> getComponents(){
         return (List<Assemble>)assembleRepository.findAll();}
@@ -29,14 +35,48 @@ public class AssembleServiceRESTImpl implements AssembleServiceREST {
     }
     @Override
     public Assemble saveComponent(Assemble assemble) {
-        validateErrors(assemble);
-//        if (findComponent(adapter)) throw new DuplicateObjectException();
+
+        checkIDnull(assemble);
+        Optional<Assemble> newAssemble = assembleRepository.findComponentByName(assemble.getName());
+
+        Adapter adapter = adapterServiceREST.saveComponent(assemble.getAdapter());
+        Holder holder = holderServiceREST.saveComponent(assemble.getHolder());
+        Tool tool = toolServiceREST.saveComponent(assemble.getTool());
+        Program program = programServiceREST.saveComponent(assemble.getProgram());
+
+        assemble.setAdapter(adapter);
+        assemble.setHolder(holder);
+        assemble.setTool(tool);
+        assemble.setProgram(program);
+        if (newAssemble.isPresent()){
+            assemble.setId(newAssemble.get().getId());
+        }
         return assembleRepository.save(assemble);
+
     }
     @Override
     public Assemble updateComponent(Assemble assemble, Long id) {
-        validateErrors(assemble);
-        Assemble assamble_copy = unwrapAssamble(assembleRepository.findById(id),id);
+        Assemble assemble_copy = unwrapComponent(assembleRepository.findById(id),id);
+        Adapter adapter = adapterServiceREST.updateComponent(
+                assemble.getAdapter(),
+                assemble.getAdapter().
+                        getId());
+        Holder holder = holderServiceREST.updateComponent(
+                assemble.getHolder(),
+                assemble.getHolder().
+                        getId());
+        Tool tool = toolServiceREST.updateComponent(
+                assemble.getTool(),
+                assemble.getTool().
+                        getId());
+        Program program = programServiceREST.updateComponent(
+                assemble.getProgram(),
+                assemble.getProgram().
+                        getId());
+        assemble.setAdapter(adapter);
+        assemble.setHolder(holder);
+        assemble.setTool(tool);
+        assemble.setProgram(program);
         assemble.setId(id);
         return assembleRepository.save(assemble);
     }
@@ -60,9 +100,19 @@ public class AssembleServiceRESTImpl implements AssembleServiceREST {
             throw new BadArgumentType(id);
         }
     }
-    private void validateErrors(Assemble assemble){
+
+    private void checkIDnull(Assemble assemble){
         if (!Objects.isNull(assemble.getId())) {
             throw new ObjectIDisNotNull("ASSEMBLE");
+        }
+    }
+
+    private Assemble unwrapComponent(Optional<Assemble> entity, Long id) {
+        if (entity.isPresent()) return entity.get();
+        if (id > 0){
+            throw new NotFoundException("ASSEMBLE", id);
+        }else {
+            throw new BadArgumentType(id);
         }
     }
 }
