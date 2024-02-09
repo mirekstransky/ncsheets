@@ -23,6 +23,8 @@ CREATE TABLE tool
 (
     id              INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name            VARCHAR(100) NOT NULL UNIQUE,
+    diameter        DOUBLE NOT NULL,
+    length          DOUBLE NOT NULL,
     tooltype_id     INTEGER NOT NULL,
     FOREIGN KEY (tooltype_id) REFERENCES tooltype (id)
 );
