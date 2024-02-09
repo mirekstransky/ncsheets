@@ -1,0 +1,92 @@
+/* - Font sizes (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98 */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+/* section {
+  border-bottom: 2px solid red;
+} */
+
+html {
+  /* font-size: 10px; */
+
+  /* 10px / 16px = 0.625 = 62.5% */
+  /* Percentage of user's browser font-size setting */
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Rubik", sans-serif;
+
+  line-height: 1;
+  font-weight: 400;
+  color: #555;
+}
+.btn,
+.btn:link,
+.btn:visited {
+  display: inline-block;
+
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 1.6rem 3.2rem;
+  border-radius: 9px;
+
+  /* Only necessary for .btn */
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+
+  /* Put transition on original "state" */
+  /* transition: background-color 0.3s; */
+  transition: all 0.3s;
+}
+
+.btn--full:link,
+.btn--full:visited {
+  background-color: green;
+  color: #fff;
+}
+.btn--full:hover,
+.btn--full:active {
+  background-color: #002600;
+}
+.btn--outline:link,
+.btn--outline:visited {
+  background-color: #fff;
+  color: #555;
+}
+.btn.btn--small {
+  font-size: 1.4rem;
+  padding: 0.8rem 1.2rem;
+}
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn--delete:link,
+.btn--delete:visited {
+  background-color: #f87171;
+  color: #fff;
+}
+.btn--delete:hover,
+.btn--delete:active {
+  background-color: #002600;
+}
+
+.btn--update:link,
+.btn--update:visited {
+  background-color: orange;
+  color: #fff;
+}
+.btn--update:hover,
+.btn--update:active {
+  background-color: #002600;
+}
