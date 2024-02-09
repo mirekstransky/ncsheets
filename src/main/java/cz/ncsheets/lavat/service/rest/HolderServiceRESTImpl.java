@@ -5,7 +5,10 @@ import cz.ncsheets.lavat.exception.*;
 import cz.ncsheets.lavat.repository.HolderRepository;
 import cz.ncsheets.lavat.repository.HoldersizeRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +31,14 @@ public class HolderServiceRESTImpl implements HolderServiceREST {
 
     @Override
     public List<Holder> getComponents(){
-        return (List<Holder>)holderRepository.findAll();}
+        return (List<Holder>)holderRepository.findAll();
+    }
+
+    @Override
+    public Page<Holder> getPageAll(Pageable pageable) {
+        return holderRepository.findAll(pageable);
+    }
+
     @Override
     public Holder getComponent(Long id) {
         Optional<Holder> holderOptional = holderRepository.findById(id);

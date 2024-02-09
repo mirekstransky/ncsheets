@@ -13,4 +13,7 @@ import java.util.Optional;
 public interface HolderRepository extends JpaRepository<Holder,Long> {
     @Query("SELECT m FROM Holder m WHERE m.name = :name")
     Optional<Holder> findComponentByName(@Param("name") String name);
+
+
+
 }
