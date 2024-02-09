@@ -1,8 +1,6 @@
-package cz.ncsheets.lavat.restController;
+package cz.ncsheets.lavat.controller.rest;
 
-import cz.ncsheets.lavat.entity.Holder;
 import cz.ncsheets.lavat.entity.Tool;
-import cz.ncsheets.lavat.service.rest.HolderServiceREST;
 import cz.ncsheets.lavat.service.rest.ToolServiceREST;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

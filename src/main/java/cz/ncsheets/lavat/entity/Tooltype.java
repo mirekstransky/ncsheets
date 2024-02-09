@@ -31,4 +31,5 @@ public class Tooltype {
     @JsonIgnore
     @OneToMany(mappedBy = "tooltype")
     private List<Tool> tools;
+
 }

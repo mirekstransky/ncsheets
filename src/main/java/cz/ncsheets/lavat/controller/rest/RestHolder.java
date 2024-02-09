@@ -1,15 +1,12 @@
-package cz.ncsheets.lavat.restController;
+package cz.ncsheets.lavat.controller.rest;
 
 
-import cz.ncsheets.lavat.entity.Adapter;
 import cz.ncsheets.lavat.entity.Holder;
-import cz.ncsheets.lavat.service.rest.AdapterServiceREST;
 import cz.ncsheets.lavat.service.rest.HolderServiceREST;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
