@@ -1,7 +1,7 @@
 package cz.ncsheets.lavat.controller.rest;
 
 import cz.ncsheets.lavat.entity.Tooltype;
-import cz.ncsheets.lavat.service.rest.TooltypeServiceREST;
+import cz.ncsheets.lavat.service.TooltypeService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,33 +15,33 @@ import java.util.List;
 @AllArgsConstructor
 public class RestTooltype {
 
-    TooltypeServiceREST tooltypeServiceREST;
+    TooltypeService tooltypeService;
 
     @GetMapping("")
     public ResponseEntity<List<Tooltype>> getComponents() {
-        List<Tooltype> tooltypeList = tooltypeServiceREST.getComponents();
+        List<Tooltype> tooltypeList = tooltypeService.getComponents();
         return new ResponseEntity<>(tooltypeList, HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Tooltype> getComponent(@PathVariable Long id) {
-        return new ResponseEntity<>(tooltypeServiceREST.getComponent(id), HttpStatus.OK);
+        return new ResponseEntity<>(tooltypeService.getComponent(id), HttpStatus.OK);
     }
     @PostMapping
     public ResponseEntity<Tooltype> saveComponent(@Valid @RequestBody Tooltype tooltype) {
-        return new ResponseEntity<>(tooltypeServiceREST.saveComponent(tooltype), HttpStatus.CREATED);
+        return new ResponseEntity<>(tooltypeService.saveComponent(tooltype), HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Tooltype> editComponent(@PathVariable Long id, @Valid @RequestBody Tooltype tooltype) {
-        return new ResponseEntity<>(tooltypeServiceREST.updateComponent(tooltype,id), HttpStatus.OK);
+        return new ResponseEntity<>(tooltypeService.updateComponent(tooltype,id), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteComponent(@PathVariable Long id) {
-        tooltypeServiceREST.deleteComponent(id);
+        tooltypeService.deleteComponent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @DeleteMapping("/deleteAll")
     public ResponseEntity<HttpStatus> deleteAllComponent() {
-        tooltypeServiceREST.deleteAll();
+        tooltypeService.deleteAll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

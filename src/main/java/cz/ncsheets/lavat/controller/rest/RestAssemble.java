@@ -1,7 +1,7 @@
 package cz.ncsheets.lavat.controller.rest;
 
 import cz.ncsheets.lavat.entity.Assemble;
-import cz.ncsheets.lavat.service.rest.AssembleServiceREST;
+import cz.ncsheets.lavat.service.AssembleService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,33 +16,33 @@ import java.util.List;
 public class RestAssemble{
 
 
-    AssembleServiceREST assembleServiceREST;
+    AssembleService assembleService;
 
     @GetMapping("")
     public ResponseEntity<List<Assemble>> getComponents() {
-        List<Assemble> assembleList = assembleServiceREST.getComponents();
+        List<Assemble> assembleList = assembleService.getComponents();
         return new ResponseEntity<>(assembleList, HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Assemble> getComponent(@PathVariable Long id) {
-        return new ResponseEntity<>(assembleServiceREST.getComponent(id), HttpStatus.OK);
+        return new ResponseEntity<>(assembleService.getComponent(id), HttpStatus.OK);
     }
     @PostMapping
     public ResponseEntity<Assemble> saveComponent(@Valid @RequestBody Assemble assemble) {
-        return new ResponseEntity<>(assembleServiceREST.saveComponent(assemble), HttpStatus.CREATED);
+        return new ResponseEntity<>(assembleService.saveComponent(assemble), HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Assemble> editComponent(@PathVariable Long id, @Valid @RequestBody Assemble assemble) {
-        return new ResponseEntity<>(assembleServiceREST.updateComponent(assemble,id), HttpStatus.OK);
+        return new ResponseEntity<>(assembleService.updateComponent(assemble,id), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteComponent(@PathVariable Long id) {
-        assembleServiceREST.deleteComponent(id);
+        assembleService.deleteComponent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @DeleteMapping("/deleteAll")
     public ResponseEntity<HttpStatus> deleteAllComponent() {
-        assembleServiceREST.deleteAll();
+        assembleService.deleteAll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

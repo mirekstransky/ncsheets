@@ -1,7 +1,7 @@
 package cz.ncsheets.lavat.controller.rest;
 
 import cz.ncsheets.lavat.entity.Holdersize;
-import cz.ncsheets.lavat.service.rest.HoldersizeServiceREST;
+import cz.ncsheets.lavat.service.HoldersizeService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,33 +15,33 @@ import java.util.List;
 @AllArgsConstructor
 public class RestHoldersize {
 
-    HoldersizeServiceREST holdersizeServiceREST;
+    HoldersizeService holdersizeService;
 
     @GetMapping("")
     public ResponseEntity<List<Holdersize>> getComponents() {
-        List<Holdersize> holdersizeList = holdersizeServiceREST.getComponents();
+        List<Holdersize> holdersizeList = holdersizeService.getComponents();
         return new ResponseEntity<>(holdersizeList, HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Holdersize> getComponent(@PathVariable Long id) {
-        return new ResponseEntity<>(holdersizeServiceREST.getComponent(id), HttpStatus.OK);
+        return new ResponseEntity<>(holdersizeService.getComponent(id), HttpStatus.OK);
     }
     @PostMapping
     public ResponseEntity<Holdersize> saveComponent(@Valid @RequestBody Holdersize holdersize) {
-        return new ResponseEntity<>(holdersizeServiceREST.saveComponent(holdersize), HttpStatus.CREATED);
+        return new ResponseEntity<>(holdersizeService.saveComponent(holdersize), HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Holdersize> editComponent(@PathVariable Long id, @Valid @RequestBody Holdersize holdersize) {
-        return new ResponseEntity<>(holdersizeServiceREST.updateComponent(holdersize,id), HttpStatus.OK);
+        return new ResponseEntity<>(holdersizeService.updateComponent(holdersize,id), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteComponent(@PathVariable Long id) {
-        holdersizeServiceREST.deleteComponent(id);
+        holdersizeService.deleteComponent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @DeleteMapping("/deleteAll")
     public ResponseEntity<HttpStatus> deleteAllComponent() {
-        holdersizeServiceREST.deleteAll();
+        holdersizeService.deleteAll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

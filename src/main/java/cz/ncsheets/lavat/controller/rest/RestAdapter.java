@@ -2,7 +2,7 @@ package cz.ncsheets.lavat.controller.rest;
 
 
 import cz.ncsheets.lavat.entity.Adapter;
-import cz.ncsheets.lavat.service.rest.AdapterServiceREST;
+import cz.ncsheets.lavat.service.AdapterService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,33 +16,33 @@ import java.util.List;
 @AllArgsConstructor
 public class RestAdapter {
 
-    AdapterServiceREST adapterServiceREST;
+    AdapterService adapterService;
 
     @GetMapping("")
     public ResponseEntity<List<Adapter>> getComponents() {
-        List<Adapter> adapterList = adapterServiceREST.getComponents();
+        List<Adapter> adapterList = adapterService.getComponents();
         return new ResponseEntity<>(adapterList, HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Adapter> getComponent(@PathVariable Long id) {
-        return new ResponseEntity<>(adapterServiceREST.getComponent(id), HttpStatus.OK);
+        return new ResponseEntity<>(adapterService.getComponent(id), HttpStatus.OK);
     }
     @PostMapping
     public ResponseEntity<Adapter> saveComponent(@Valid @RequestBody Adapter adapter) {
-        return new ResponseEntity<>(adapterServiceREST.saveComponent(adapter), HttpStatus.CREATED);
+        return new ResponseEntity<>(adapterService.saveComponent(adapter), HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Adapter> editComponent(@PathVariable Long id, @Valid @RequestBody Adapter adapter) {
-        return new ResponseEntity<>(adapterServiceREST.updateComponent(adapter,id), HttpStatus.OK);
+        return new ResponseEntity<>(adapterService.updateComponent(adapter,id), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteComponent(@PathVariable Long id) {
-        adapterServiceREST.deleteComponent(id);
+        adapterService.deleteComponent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @DeleteMapping("/deleteAll")
     public ResponseEntity<HttpStatus> deleteAllComponent() {
-        adapterServiceREST.deleteAll();
+        adapterService.deleteAll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
