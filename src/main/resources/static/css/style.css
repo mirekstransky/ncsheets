@@ -67,11 +67,15 @@ body {
 
 .container {
   height: 80vh;
-  width: 80%;
+  /*width: 90%;*/
   margin: 0 auto;
-  max-width: 120rem;
+  /*max-width: 120rem;*/
   padding: 0 3.2rem;
-  margin: 0 auto;
+  margin-bottom: 3.2rem;
+}
+
+.margin-top{
+  margin-top: 0.8rem;
 }
 
 /* ///////////////////////////// 
@@ -103,14 +107,33 @@ tbody tr:nth-child(odd) {
 tbody tr:nth-child(even) {
   background-color: #e9ecef;
 }
+tbody tr:last-child{
+  background-color: #737373;
+}
+
 .heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 4rem;
-  margin-bottom: 4rem;
+  margin-top: 1.8rem;
+  margin-bottom: 1.2rem;
   flex-direction: row;
 }
 .heading .admin {
   padding: 1.6rem 3.2rem;
+}
+.nopointer{
+  cursor: not-allowed;
+}
+.input-filter{
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+.input--2cols{
+  display: flex;
+  gap: 2px;
+}
+.input--2cols input{
+  width: 50%;
 }
