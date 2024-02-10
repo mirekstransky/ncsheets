@@ -90,3 +90,6 @@ body {
 .btn--update:active {
   background-color: #002600;
 }
+.pokus{
+  display: inline-block;
+}
