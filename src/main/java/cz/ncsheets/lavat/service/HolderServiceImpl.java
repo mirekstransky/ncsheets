@@ -1,6 +1,7 @@
-package cz.ncsheets.lavat.service.rest;
+package cz.ncsheets.lavat.service;
 
 import cz.ncsheets.lavat.entity.*;
+import cz.ncsheets.lavat.entity.filter.HolderForm;
 import cz.ncsheets.lavat.exception.*;
 import cz.ncsheets.lavat.repository.HolderRepository;
 import cz.ncsheets.lavat.repository.HoldersizeRepository;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class HolderServiceRESTImpl implements HolderServiceREST {
+public class HolderServiceImpl implements HolderService {
 
 
 ////////////////////////////
@@ -27,7 +28,7 @@ public class HolderServiceRESTImpl implements HolderServiceREST {
 
     HolderRepository holderRepository;
     HoldersizeRepository holdersizeRepository;
-    HoldersizeServiceREST holdersizeServiceREST;
+    HoldersizeService holdersizeService;
 
     @Override
     public List<Holder> getComponents(){
@@ -40,6 +41,10 @@ public class HolderServiceRESTImpl implements HolderServiceREST {
     }
 
     @Override
+    public Page<Holder> findPageByHolderForm(HolderForm form, Pageable pageable) {
+        return holderRepository.findPageByHolderForm(form,pageable);
+    }
+    @Override
     public Holder getComponent(Long id) {
         Optional<Holder> holderOptional = holderRepository.findById(id);
         return unwrapComponent(holderOptional,id);
@@ -49,7 +54,7 @@ public class HolderServiceRESTImpl implements HolderServiceREST {
         checkIDnull(holder);
 
         Optional<Holder> newHolder = holderRepository.findComponentByName(holder.getName());
-        Holdersize holdersize = holdersizeServiceREST.saveComponent(holder.getHolderSize());
+        Holdersize holdersize = holdersizeService.saveComponent(holder.getHolderSize());
 
         if (newHolder.isPresent()){
             holder.setId(newHolder.get().getId());
@@ -64,7 +69,7 @@ public class HolderServiceRESTImpl implements HolderServiceREST {
     public Holder updateComponent(Holder holder, Long id) {
         Holder holder_copy = unwrapComponent(holderRepository.findById(id),id);
 
-        Holdersize holdersize = holdersizeServiceREST.updateComponent(
+        Holdersize holdersize = holdersizeService.updateComponent(
                 holder.getHolderSize(),holder.getHolderSize().getId());
         holder.setHolderSize(holdersize);
         holder.setId(id);

@@ -1,4 +1,4 @@
-package cz.ncsheets.lavat.service.rest;
+package cz.ncsheets.lavat.service;
 
 import cz.ncsheets.lavat.entity.*;
 import cz.ncsheets.lavat.exception.BadArgumentType;
@@ -15,11 +15,11 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class ToolServiceRESTImpl implements ToolServiceREST {
+public class ToolServiceImpl implements ToolService {
 
     ToolRepository toolRepository;
     TooltypeRepository tooltypeRepository;
-    TooltypeServiceREST tooltypeServiceREST;
+    TooltypeService tooltypeService;
 
     @Override
     public List<Tool> getComponents(){
@@ -34,7 +34,7 @@ public class ToolServiceRESTImpl implements ToolServiceREST {
     public Tool saveComponent(Tool tool) {
         checkIDnull(tool);
         Optional<Tool> newTool = toolRepository.findComponentByName(tool.getName());
-        Tooltype tooltype = tooltypeServiceREST.saveComponent(tool.getTooltype());
+        Tooltype tooltype = tooltypeService.saveComponent(tool.getTooltype());
 
         if (newTool.isPresent()){
             tool.setId(newTool.get().getId());
@@ -51,7 +51,7 @@ public class ToolServiceRESTImpl implements ToolServiceREST {
 
         Tool tool_copy = unwrapComponent(toolRepository.findById(id),id);
 
-        Tooltype tooltype = tooltypeServiceREST.updateComponent(tool.getTooltype(),tool.getTooltype().getId());
+        Tooltype tooltype = tooltypeService.updateComponent(tool.getTooltype(),tool.getTooltype().getId());
         tool.setTooltype(tooltype);
         tool.setId(id);
 

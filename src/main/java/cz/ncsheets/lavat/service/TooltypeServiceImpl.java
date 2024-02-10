@@ -1,8 +1,5 @@
-package cz.ncsheets.lavat.service.rest;
+package cz.ncsheets.lavat.service;
 
-import cz.ncsheets.lavat.entity.Adapter;
-import cz.ncsheets.lavat.entity.Holdersize;
-import cz.ncsheets.lavat.entity.Tool;
 import cz.ncsheets.lavat.entity.Tooltype;
 import cz.ncsheets.lavat.exception.BadArgumentType;
 import cz.ncsheets.lavat.exception.NotFoundException;
@@ -17,7 +14,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class TooltypeServiceRESTImpl implements TooltypeServiceREST{
+public class TooltypeServiceImpl implements TooltypeService {
 
     TooltypeRepository tooltypeRepository;
 

@@ -1,4 +1,4 @@
-package cz.ncsheets.lavat.service.rest;
+package cz.ncsheets.lavat.service;
 
 import cz.ncsheets.lavat.entity.Adapter;
 import cz.ncsheets.lavat.exception.*;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class AdapterServiceRESTImpl implements AdapterServiceREST {
+public class AdapterServiceImpl implements AdapterService {
 
 
     AdapterRepository adapterRepository;

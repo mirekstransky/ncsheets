@@ -1,11 +1,10 @@
-package cz.ncsheets.lavat.service.rest;
+package cz.ncsheets.lavat.service;
 
-import cz.ncsheets.lavat.entity.Adapter;
 import cz.ncsheets.lavat.entity.Program;
 
 import java.util.List;
 
-public interface ProgramServiceREST {
+public interface ProgramService {
     Program getComponent(Long id);
     Program saveComponent(Program program);
     Program updateComponent(Program program, Long id);

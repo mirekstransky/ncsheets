@@ -1,11 +1,11 @@
-package cz.ncsheets.lavat.service.rest;
+package cz.ncsheets.lavat.service;
 
 import cz.ncsheets.lavat.entity.Holdersize;
-import org.springframework.validation.BindingResult;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface HoldersizeServiceREST {
+public interface HoldersizeService {
     Holdersize getComponent(Long id);
     Holdersize saveComponent(Holdersize holdersize);
     Holdersize updateComponent(Holdersize holdersize, Long id);
@@ -13,5 +13,6 @@ public interface HoldersizeServiceREST {
     List<Holdersize> getComponents();
     List<Holdersize> saveAllComponents(List<Holdersize> holdersize);
     void deleteAll();
+    Optional<Holdersize> findByName(String name);
 
 }

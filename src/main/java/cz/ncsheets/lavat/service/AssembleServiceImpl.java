@@ -1,4 +1,4 @@
-package cz.ncsheets.lavat.service.rest;
+package cz.ncsheets.lavat.service;
 
 import cz.ncsheets.lavat.entity.*;
 import cz.ncsheets.lavat.exception.BadArgumentType;
@@ -6,6 +6,8 @@ import cz.ncsheets.lavat.exception.NotFoundException;
 import cz.ncsheets.lavat.exception.ObjectIDisNotNull;
 import cz.ncsheets.lavat.repository.AssembleRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,20 +16,25 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class AssembleServiceRESTImpl implements AssembleServiceREST {
+public class AssembleServiceImpl implements AssembleService {
 
 
     AssembleRepository assembleRepository;
-
-    AdapterServiceREST adapterServiceREST;
-    HolderServiceREST holderServiceREST;
-    ToolServiceREST toolServiceREST;
-    ProgramServiceREST programServiceREST;
+    AdapterService adapterService;
+    HolderService holderService;
+    ToolService toolService;
+    ProgramService programService;
 
 
     @Override
     public List<Assemble> getComponents(){
         return (List<Assemble>)assembleRepository.findAll();}
+
+    @Override
+    public Page<Assemble> findComponentsWithAdapter(Long id, Pageable pageable) {
+        return assembleRepository.findComponentsWithAdapter(id,pageable);
+    }
+
     @Override
     public Assemble getComponent(Long id) {
         Optional<Assemble> assembleOptional = assembleRepository.findById(id);
@@ -39,10 +46,10 @@ public class AssembleServiceRESTImpl implements AssembleServiceREST {
         checkIDnull(assemble);
         Optional<Assemble> newAssemble = assembleRepository.findComponentByName(assemble.getName());
 
-        Adapter adapter = adapterServiceREST.saveComponent(assemble.getAdapter());
-        Holder holder = holderServiceREST.saveComponent(assemble.getHolder());
-        Tool tool = toolServiceREST.saveComponent(assemble.getTool());
-        Program program = programServiceREST.saveComponent(assemble.getProgram());
+        Adapter adapter = adapterService.saveComponent(assemble.getAdapter());
+        Holder holder = holderService.saveComponent(assemble.getHolder());
+        Tool tool = toolService.saveComponent(assemble.getTool());
+        Program program = programService.saveComponent(assemble.getProgram());
 
         assemble.setAdapter(adapter);
         assemble.setHolder(holder);
@@ -57,19 +64,19 @@ public class AssembleServiceRESTImpl implements AssembleServiceREST {
     @Override
     public Assemble updateComponent(Assemble assemble, Long id) {
         Assemble assemble_copy = unwrapComponent(assembleRepository.findById(id),id);
-        Adapter adapter = adapterServiceREST.updateComponent(
+        Adapter adapter = adapterService.updateComponent(
                 assemble.getAdapter(),
                 assemble.getAdapter().
                         getId());
-        Holder holder = holderServiceREST.updateComponent(
+        Holder holder = holderService.updateComponent(
                 assemble.getHolder(),
                 assemble.getHolder().
                         getId());
-        Tool tool = toolServiceREST.updateComponent(
+        Tool tool = toolService.updateComponent(
                 assemble.getTool(),
                 assemble.getTool().
                         getId());
-        Program program = programServiceREST.updateComponent(
+        Program program = programService.updateComponent(
                 assemble.getProgram(),
                 assemble.getProgram().
                         getId());

@@ -1,8 +1,6 @@
-package cz.ncsheets.lavat.service.rest;
+package cz.ncsheets.lavat.service;
 
-import cz.ncsheets.lavat.entity.Holder;
 import cz.ncsheets.lavat.entity.Holdersize;
-import cz.ncsheets.lavat.entity.Tooltype;
 import cz.ncsheets.lavat.exception.BadArgumentType;
 import cz.ncsheets.lavat.exception.NotFoundException;
 import cz.ncsheets.lavat.exception.ObjectIDisNotNull;
@@ -16,7 +14,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class HoldersizeServiceRESTImpl implements HoldersizeServiceREST{
+public class HoldersizeServiceImpl implements HoldersizeService {
 
     HoldersizeRepository holdersizeRepository;
 
@@ -54,6 +52,11 @@ public class HoldersizeServiceRESTImpl implements HoldersizeServiceREST{
     @Override
     public void deleteAll() {
         holdersizeRepository.deleteAll();}
+
+    @Override
+    public Optional<Holdersize> findByName(String name) {
+        return holdersizeRepository.findComponentByName(name);
+    }
 
     @Override
     public List<Holdersize> saveAllComponents(List<Holdersize> holdersizeList){

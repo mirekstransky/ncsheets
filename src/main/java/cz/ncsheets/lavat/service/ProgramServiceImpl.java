@@ -1,9 +1,6 @@
-package cz.ncsheets.lavat.service.rest;
+package cz.ncsheets.lavat.service;
 
-import cz.ncsheets.lavat.entity.Adapter;
 import cz.ncsheets.lavat.entity.Program;
-import cz.ncsheets.lavat.entity.Tool;
-import cz.ncsheets.lavat.entity.Tooltype;
 import cz.ncsheets.lavat.exception.BadArgumentType;
 import cz.ncsheets.lavat.exception.NotFoundException;
 import cz.ncsheets.lavat.exception.ObjectIDisNotNull;
@@ -17,7 +14,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class ProgramServiceRESTImpl implements ProgramServiceREST {
+public class ProgramServiceImpl implements ProgramService {
 
 
     ProgramRepository programRepository;

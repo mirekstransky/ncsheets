@@ -1,11 +1,9 @@
-package cz.ncsheets.lavat.service.rest;
+package cz.ncsheets.lavat.service;
 import java.util.List;
-import java.util.Optional;
 
 import cz.ncsheets.lavat.entity.Adapter;
-import org.springframework.validation.BindingResult;
 
-public interface AdapterServiceREST {
+public interface AdapterService {
     Adapter getComponent(Long id);
     Adapter saveComponent(Adapter adapter);
     Adapter updateComponent(Adapter adapter, Long id);

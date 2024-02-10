@@ -1,11 +1,10 @@
-package cz.ncsheets.lavat.service.rest;
+package cz.ncsheets.lavat.service;
 
-import cz.ncsheets.lavat.entity.Holder;
 import cz.ncsheets.lavat.entity.Tool;
 
 import java.util.List;
 
-public interface ToolServiceREST {
+public interface ToolService {
     Tool getComponent(Long id);
     Tool saveComponent(Tool tool);
     Tool updateComponent(Tool tool, Long id);
