@@ -16,7 +16,7 @@
         <h1 class="heading-primary">Seznam držáků</h1>
         <a href="/administrace" class="btn btn--full admin">Vytvořit nový</a>
     </div>
-    [#list holders.content]
+    [#list items.content]
     <table>
         <thead>
         <tr>
@@ -35,19 +35,48 @@
                 <td>${item.length}</td>
                 <td>${item.holderSize.name}</td>
                 <td>
-                    <a href="/mainpage.html" class="btn btn--small btn--update"
-                    >Upravit</a
-                    >
-                    <a href="/mainpage.html" class="btn btn--small btn--delete"
-                    >Smazat</a
-                    >
+                    <a href="/component/holder/edit/${item.id}" class="btn btn--small btn--update">Upravit</a>
+                    <form action="/component/holder/delete" method="post">
+                        <input type="hidden" name="holderId" value="${item.id}" />
+                        <button type="submit" class="btn btn-light" onclick="if (!(confirm('Opravdu chcete položku vymazat?'))) return false">Smazat</button>
+                    </form>
                 </td>
             </tr>
         [/#items]
+        [#assign x="Unknown"]
+            <form action="/components/holder/filter" method="GET">
+                <tr>
+                    <td>
+                        <input name="name" class="input-filter" type="search" value="${form.name!}" placeholder="Dle názvu">
+                    </td>
+                    <td>
+                        <div class="input--2cols">
+                            <input name="fromDiameter" class="input-filter" type="number" value="${form.fromDiameter!}" step="2" placeholder="od průměru">
+                            <input name="toDiameter" class="input-filter" type="number" value="${form.toDiameter!}" step="2" placeholder="do průměru">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input--2cols">
+                            <input name="fromLength" class="input-filter" type="number" value="${form.fromLength!}" step="2" placeholder="od délky">
+                            <input name="toLength" class="input-filter" type="number" value="${form.toLength!}" step="2" placeholder="do délky">
+                        </div>
+                    </td>
+                    <td>
+                        <input name="size" class="input-filter" type="search" value="${form.size!}" placeholder="Filtrovat dle upnutí">
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn--small btn--update">Submit</button>
+                    </td>
+                </tr>
+            </form>
         </tbody>
     </table>
     [#else]
         <div>Seznam je prázdný.</div>
     [/#list]
+    <div class="container-button margin-top">
+        [@c.pager /]
+    </div>
 </div>
+[@c.totalCount/]
 [/@c.page]

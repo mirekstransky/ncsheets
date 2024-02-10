@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="/css/general.css"/>
         <link rel="stylesheet" href="/css/style.css"/>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.png">
         <title>${title}</title>
     </head>
         <body>
@@ -15,32 +16,28 @@
     </html>
 [/#macro]
 
-
 [#macro totalCount]
     <div class="totalCount">
-        [#if osoby.totalElements == 1]
-            Celkem nalezen <strong>${osoby.totalElements}</strong> záznam.
-        [#elseif osoby.totalElements <= 4]
-            Celkem nalezeny <strong>${osoby.totalElements}</strong> záznamy.
+        [#if items.totalElements == 1]
+            Celkem nalezen <strong>${items.totalElements}</strong> záznam.
+        [#elseif items.totalElements <= 4]
+            Celkem nalezeny <strong>${items.totalElements}</strong> záznamy.
         [#else ]
-            Celkem nalezeno <strong>${osoby.totalElements}</strong> záznamů.
+            Celkem nalezeno <strong>${items.totalElements}</strong> záznamů.
         [/#if]
     </div>
-
-
 [/#macro]
-
 [#macro pager]
 [#--    <div class="pager">--]
-        [@pagerLink page=blogy.number - 1 active=blogy.first text="←" /]
-        [@pagerLink page=blogy.number + 1 active=blogy.last text="→" /]
+    [@pagerLink page=items.number - 1 active=items.first text="←" /]
+    [@pagerLink page=items.number + 1 active=items.last text="→" /]
 [#--    </div>--]
 [/#macro]
 
 [#macro pagerLink page text active]
     [#if active]
-        <span class="page active">${text}</span>
+        <div class="btn nopointer">${text}</div>
     [#else ]
-            <a  href="${createURL({"size": blogy.size, "page": page})}" class="btn btn--full">${text}</a>
+        <a href="/components/holder?page=${page}&size=${items.size}" class="btn btn--full">${text}</a>
     [/#if]
 [/#macro]
