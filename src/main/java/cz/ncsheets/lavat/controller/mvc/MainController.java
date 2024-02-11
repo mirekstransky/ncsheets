@@ -4,6 +4,7 @@ import cz.ncsheets.lavat.entity.Assemble;
 import cz.ncsheets.lavat.entity.filter.HolderForm;
 import cz.ncsheets.lavat.service.AssembleService;
 import cz.ncsheets.lavat.service.HolderService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,11 +37,14 @@ public class MainController {
     @GetMapping("/components/holder")
     public ModelAndView index(@PageableDefault(sort = {"name"},size = 8) Pageable pageable) {
         return new ModelAndView("holder")
-                .addObject("items", holderService.getPageAll(pageable)).addObject("form",new HolderForm());
+                .addObject("items", holderService.getPageAll(pageable))
+                .addObject("form",new HolderForm());
     }
-    @GetMapping("/components/holder/filter")
-    public ModelAndView filterHolder(@ModelAttribute("form") HolderForm form, @PageableDefault(sort = {"name"}) Pageable pageable) {
+    @GetMapping("/components/holder")
+    public ModelAndView filterHolder(@ModelAttribute("form") HolderForm form,
+                                     @PageableDefault(sort = {"name"},size = 8) Pageable pageable) {
         return new ModelAndView("holder")
+                .addObject("formInclude", "holder.ftlh")
                 .addObject("items", holderService.findPageByHolderForm(form,pageable));
     }
     @PostMapping("/component/holder/delete")

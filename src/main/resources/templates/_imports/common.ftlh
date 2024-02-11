@@ -38,6 +38,6 @@
     [#if active]
         <div class="btn nopointer">${text}</div>
     [#else ]
-        <a href="/components/holder?page=${page}&size=${items.size}" class="btn btn--full">${text}</a>
+        <a href="/components/holder/filter?page=${page}&name=${form.name!}&fromDiameter=${form.fromDiameter!}&toDiameter=${form.toDiameter!}&fromLength=${form.fromLength!}&toLength=${form.toLength!}" class="btn btn--full">${text}</a>
     [/#if]
 [/#macro]

@@ -18,7 +18,7 @@ public interface AssembleRepository extends JpaRepository<Assemble,Long> {
     @Query("SELECT m FROM Assemble m WHERE m.name = :name")
     Optional<Assemble> findComponentByName(@Param("name") String id);
 
-    @Query("SELECT m FROM Assemble m WHERE m.adapter.id = :id")
+    @Query("SELECT m FROM Assemble m WHERE m.holder.id = :id")
     Page<Assemble> findComponentsWithAdapter(@Param("id") Long id, Pageable pageable);
 
 }

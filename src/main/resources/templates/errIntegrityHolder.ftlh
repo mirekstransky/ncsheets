@@ -17,8 +17,7 @@
             <table>
                 <thead>
                 <tr>
-                    <th class="heading-secondary">Název sestavy</th>
-                    <th class="heading-secondary">Akce</th>
+                    <th class="heading-secondary">Název</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -27,17 +26,14 @@
                         <td>
                             ${item.name}
                         </td>
-                        <td>
-                            <a href="/component/holder/edit/${item.id}" class="btn btn--small btn--update">Upravit</a>
-                        </td>
                     </tr>
                 [/#items]
                 </tbody>
             </table>
         [/#list]
         <div class="container-button margin-top">
-            [@c.pager /]
+            <div>[@c.pager /]</div>
+            <div>[@c.totalCount/]</div>
         </div>
     </div>
-    [@c.totalCount/]
 [/@c.page]

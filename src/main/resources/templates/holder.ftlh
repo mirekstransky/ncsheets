@@ -35,15 +35,16 @@
                 <td>${item.length}</td>
                 <td>${item.holderSize.name}</td>
                 <td>
-                    <a href="/component/holder/edit/${item.id}" class="btn btn--small btn--update">Upravit</a>
-                    <form action="/component/holder/delete" method="post">
-                        <input type="hidden" name="holderId" value="${item.id}" />
-                        <button type="submit" class="btn btn-light" onclick="if (!(confirm('Opravdu chcete položku vymazat?'))) return false">Smazat</button>
-                    </form>
+                    <div class="input--2cols">
+                        <a href="/component/holder/edit/${item.id}" class="btn btn--small btn--update">Upravit</a>
+                        <form action="/component/holder/delete" method="post">
+                            <input type="hidden" name="holderId" value="${item.id}" />
+                            <button type="submit" class="btn btn--small btn--delete" onclick="if (!(confirm('Opravdu chcete položku vymazat?'))) return false">Smazat</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         [/#items]
-        [#assign x="Unknown"]
             <form action="/components/holder/filter" method="GET">
                 <tr>
                     <td>
@@ -65,7 +66,7 @@
                         <input name="size" class="input-filter" type="search" value="${form.size!}" placeholder="Filtrovat dle upnutí">
                     </td>
                     <td>
-                        <button type="submit" class="btn btn--small btn--update">Submit</button>
+                        <button type="submit" class="btn btn--small btn--update" name="action" value="seach">Submit</button>
                     </td>
                 </tr>
             </form>
@@ -75,8 +76,9 @@
         <div>Seznam je prázdný.</div>
     [/#list]
     <div class="container-button margin-top">
-        [@c.pager /]
+        <div>[@c.pager/]</div>
+        <div>[@c.totalCount/]</div>
     </div>
 </div>
-[@c.totalCount/]
+
 [/@c.page]

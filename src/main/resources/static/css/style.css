@@ -132,8 +132,14 @@ tbody tr:last-child{
 }
 .input--2cols{
   display: flex;
+  justify-content: center;
   gap: 2px;
 }
 .input--2cols input{
   width: 50%;
+}
+.container-button{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
