@@ -29,7 +29,7 @@
 [/#macro]
 [#macro pager]
 [#--    <div class="pager">--]
-    [@pagerLink page=items.number - 1 active=items.first text="←" /]
+    [@pagerLink page=items.number - 1 active=items.first text="←"/]
     [@pagerLink page=items.number + 1 active=items.last text="→" /]
 [#--    </div>--]
 [/#macro]
@@ -38,6 +38,6 @@
     [#if active]
         <div class="btn nopointer">${text}</div>
     [#else ]
-        <a href="/components/holder/filter?page=${page}&name=${form.name!}&fromDiameter=${form.fromDiameter!}&toDiameter=${form.toDiameter!}&fromLength=${form.fromLength!}&toLength=${form.toLength!}" class="btn btn--full">${text}</a>
+        <a href="${base!}?page=${page}&name=${form.name!}&fromDiameter=${form.fromDiameter!}&toDiameter=${form.toDiameter!}&fromLength=${form.fromLength!}&toLength=${form.toLength!}" class="btn btn--full">${text}</a>
     [/#if]
 [/#macro]
