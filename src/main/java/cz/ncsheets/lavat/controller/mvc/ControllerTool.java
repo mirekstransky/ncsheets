@@ -1,12 +1,9 @@
 package cz.ncsheets.lavat.controller.mvc;
-import cz.ncsheets.lavat.entity.Adapter;
 import cz.ncsheets.lavat.entity.Holder;
-import cz.ncsheets.lavat.entity.filter.AdapterForm;
+import cz.ncsheets.lavat.entity.Tool;
 import cz.ncsheets.lavat.entity.filter.HolderForm;
-import cz.ncsheets.lavat.service.AdapterService;
-import cz.ncsheets.lavat.service.AssembleService;
-import cz.ncsheets.lavat.service.HolderService;
-import cz.ncsheets.lavat.service.HoldersizeService;
+import cz.ncsheets.lavat.entity.filter.ToolForm;
+import cz.ncsheets.lavat.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,61 +17,65 @@ import org.springframework.web.servlet.ModelAndView;
 @AllArgsConstructor
 @Controller
 @RequestMapping("/components")
-public class ControllerAdapter {
+public class ControllerTool {
 
-    AdapterService adapterService;
-    @GetMapping("/adapter")
+    ToolService toolService;
+    TooltypeService tooltypeService;
+
+
+    @GetMapping("/tool")
     public ModelAndView index(@PageableDefault(sort = {"name"},size = 8) Pageable pageable,
                               HttpServletRequest request) {
         String queryString = request.getQueryString();
-        return new ModelAndView("adapter")
-                .addObject("items", adapterService.getPageAll(pageable))
-                .addObject("form",new HolderForm());
+        return new ModelAndView("tool")
+                .addObject("items", toolService.getPageAll(pageable))
+                .addObject("form",new ToolForm());
     }
-    @GetMapping("/adapter/filter")
-    public ModelAndView filterItems(@ModelAttribute("form") AdapterForm form,
+    @GetMapping("/tool/filter")
+    public ModelAndView filter(@ModelAttribute("form") ToolForm form,
                                      @PageableDefault(sort = {"name"},size = 8) Pageable pageable,
                                      HttpServletRequest request) {
         String basePath = request.getServletPath();
-        return new ModelAndView("adapter")
+        return new ModelAndView("tool")
                     .addObject("base",basePath)
-                    .addObject("items", adapterService.findPageByAdapterForm(form,pageable));
+                    .addObject("items", toolService.findPageByToolForm(form,pageable));
     }
 
     //dodelat component ->components
-    @PostMapping("/adapter/delete")
-    public Object deleteItem(@RequestParam("holderId") long id,Pageable pageable){
+    @PostMapping("/tool/delete")
+    public Object deleteItem(@RequestParam("toolId") long id,Pageable pageable){
       /*  Page<Assemble> assemble = assembleService.findComponentsWithAdapter(id,pageable);
         if (assemble.getSize() != 0) {
             return new ModelAndView("errIntegrityHolder")
                     .addObject("items",assemble);
         }*/
-        adapterService.deleteComponent(id);
+        toolService.deleteComponent(id);
 
-        return "redirect:/components/adapter";
+        return "redirect:/components/tool";
     }
 
-    @GetMapping("/adapter/form")
+    @GetMapping("/tool/form")
     public ModelAndView createView(){
-        ModelAndView model = new ModelAndView("form_adapter");
-        model.addObject("form",new Adapter());
-        model.addObject("form_holdersize",adapterService.getComponents());
+        ModelAndView model = new ModelAndView("form_tool");
+        model.addObject("form",new Tool());
+        model.addObject("form_tooltype",toolService.getComponents());
         return model;
     }
 
-    @PostMapping("/adapter/form")
-    public String createItem(@Valid Adapter adapter, BindingResult bindingResult){
+    @PostMapping("/tool/form")
+    public String createItem(@Valid Tool tool, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
-            return "form_adapter";
+            return "form_tool";
         }
 
-         adapterService.saveComponent(adapter);
+        toolService.saveComponent(tool);
          return "redirect:/";
     }
-    @GetMapping("/adapter/edit/{id}")
+    @GetMapping("/tool/edit/{id}")
     public ModelAndView editItem(@PathVariable long id){
-        ModelAndView model = new ModelAndView("form_adapter");
-        model.addObject("form",adapterService.getComponent(id));
+        ModelAndView model = new ModelAndView("form_tool");
+        model.addObject("form",toolService.getComponent(id));
+        model.addObject("form_tooltype",tooltypeService.getComponents());
         return model;
     }
 }
