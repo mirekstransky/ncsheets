@@ -78,7 +78,7 @@ body {
   margin-top: 0.8rem;
 }
 
-/* ///////////////////////////// 
+/* /////////////////////////////
 //////////  Tabulky   //////////
 //////////////////////////////*/
 
@@ -142,4 +142,67 @@ tbody tr:last-child{
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/***************************/
+
+.form {
+  width: 100%;
+}
+
+.form-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4.8rem 6.4rem 6.4rem 6.4rem;
+  background-color: #333333;
+}
+.form label {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+  color: white;
+}
+.form input,
+.form select {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.8rem;
+  font-family: inherit;
+  color: inherit;
+  border: none;
+  background-color: #fdf2e9;
+  border-radius: 9px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+.center-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  margin-top: 3rem;
+  height: 85vh;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.form-head {
+  margin-bottom: 4rem;
+}
+.heading-form {
+  text-transform: uppercase;
+  color: white;
+}
+.btn-block button{
+  margin-top: 1rem;
+  width: 100%;
+}
+.btn-block button:hover,
+.btn-block button:active{
+  background-color: green;
+  color: white;
 }
