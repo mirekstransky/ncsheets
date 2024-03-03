@@ -2,19 +2,19 @@
 [@c.page title="NC Sheets"]
 <nav class="topnav">
     <div class="first-nav">
-        <a class="topnav-list-link" href="mainpage.html">Přehled</a>
+        <a class="topnav-list-link" href="/">Přehled</a>
         <a class="topnav-list-link" href="#">Založit NC Sheet</a>
-        <a class="topnav-list-link first" href="komponenty.html">Komponenty</a>
+        <a class="topnav-list-link first" href="/components">Komponenty</a>
     </div>
     <div class="second-nav">
-        <a class="topnav-list-link" href="komponenty.html">Zpět</a>
+        <a class="topnav-list-link" href="/components">Zpět</a>
     </div>
 </nav>
 
 <div class="container">
     <div class="heading">
         <h1 class="heading-primary">Seznam držáků</h1>
-        <a href="/administrace" class="btn btn--full admin">Vytvořit nový</a>
+        <a href="/components/holder/form" class="btn btn--full admin">Vytvořit nový</a>
     </div>
     [#list items.content]
     <table>
@@ -36,8 +36,8 @@
                 <td>${item.holderSize.name}</td>
                 <td>
                     <div class="input--2cols">
-                        <a href="/component/holder/edit/${item.id}" class="btn btn--small btn--update">Upravit</a>
-                        <form action="/component/holder/delete" method="post">
+                        <a href="/components/holder/edit/${item.id}" class="btn btn--small btn--update">Upravit</a>
+                        <form action="/components/holder/delete" method="post">
                             <input type="hidden" name="holderId" value="${item.id}" />
                             <button type="submit" class="btn btn--small btn--delete" onclick="if (!(confirm('Opravdu chcete položku vymazat?'))) return false">Smazat</button>
                         </form>
