@@ -1,12 +1,16 @@
 package cz.ncsheets.lavat.service;
 
 import cz.ncsheets.lavat.entity.*;
+import cz.ncsheets.lavat.entity.filter.AdapterForm;
+import cz.ncsheets.lavat.entity.filter.ToolForm;
 import cz.ncsheets.lavat.exception.BadArgumentType;
 import cz.ncsheets.lavat.exception.NotFoundException;
 import cz.ncsheets.lavat.exception.ObjectIDisNotNull;
 import cz.ncsheets.lavat.repository.ToolRepository;
 import cz.ncsheets.lavat.repository.TooltypeRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +33,15 @@ public class ToolServiceImpl implements ToolService {
     public Tool getComponent(Long id) {
         Optional<Tool> toolOptional = toolRepository.findById(id);
         return unwrapComponent(toolOptional,id);
+    }
+    @Override
+    public Page<Tool> getPageAll(Pageable pageable) {
+        return toolRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Tool> findPageByToolForm(ToolForm form, Pageable pageable) {
+        return toolRepository.findPageByToolForm(form,pageable);
     }
     @Override
     public Tool saveComponent(Tool tool) {
