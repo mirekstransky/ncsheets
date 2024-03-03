@@ -2,6 +2,7 @@ package cz.ncsheets.lavat.entity;
 
 import cz.ncsheets.lavat.constants.Constants;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -31,6 +32,7 @@ public class Holder {
     @DecimalMin(value = Constants.DECIMAL_MIN ,message = Constants.DECIMAL_MIN_MESSAGE)
     private double diameter;
 
+    @Valid
     @ManyToOne
     @NotNull(message = Constants.NOT_NULL)
     @JoinColumn(name = "holdersize_id")
