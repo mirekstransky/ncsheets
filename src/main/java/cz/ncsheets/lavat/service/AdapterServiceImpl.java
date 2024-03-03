@@ -1,9 +1,14 @@
 package cz.ncsheets.lavat.service;
 
 import cz.ncsheets.lavat.entity.Adapter;
+import cz.ncsheets.lavat.entity.Holder;
+import cz.ncsheets.lavat.entity.filter.AdapterForm;
+import cz.ncsheets.lavat.entity.filter.HolderForm;
 import cz.ncsheets.lavat.exception.*;
 import cz.ncsheets.lavat.repository.AdapterRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +30,17 @@ public class AdapterServiceImpl implements AdapterService {
         Optional<Adapter> adapterOptional = adapterRepository.findById(id);
         return unwrapComponent(adapterOptional,id);
     }
+    @Override
+    public Page<Adapter> getPageAll(Pageable pageable) {
+        return adapterRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Adapter> findPageByAdapterForm(AdapterForm form, Pageable pageable) {
+        return adapterRepository.findPageByAdapterForm(form,pageable);
+    }
+
+
     @Override
     public Adapter saveComponent(Adapter adapter) {
         checkIDnull(adapter);
